@@ -53,9 +53,9 @@ function FormOne() {
                 <Form.Item
                     label="Password"
                     name="password"
-                    rules={[{ required: true, message: errors.password && 'Password is required' }]}
+                    rules={[{ required: true, message: errors.password && 'Password is required', min: 6 }]}
                 >
-                    <Input.Password {...register("password", { required: true })} />
+                    <Input.Password {...register("password", { required: true, min: 6 })} />
                 </Form.Item>
 
                 <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
