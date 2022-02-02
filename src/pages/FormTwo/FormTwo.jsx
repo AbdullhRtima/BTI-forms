@@ -27,7 +27,7 @@ const FormTwo = () => {
             />
           )}
         />
-        <Button  type="primary" htmlType='submit'>
+        <Button   type="primary" htmlType='submit'>
           start search
         </Button>
       </Form>

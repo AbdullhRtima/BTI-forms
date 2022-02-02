@@ -1,7 +1,8 @@
 import React from 'react';
 import { Input, Button, Form, Select, Typography, Cascader, Checkbox } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import { registerAccountSchema } from '../../utils/validation';
 import './formThree.css';
 
 // constant
@@ -44,12 +45,15 @@ const residences = [
 
 const FormThree = () => {
     // hooks
-    const { control, watch, handleSubmit } = useForm();
+    const { control, watch, handleSubmit, formState: { errors } } = useForm(
+        {
+            resolver: yupResolver(registerAccountSchema),
+        }
+    );
 
     // functions
     const submit = data => console.log(data);
-    const currentValues = watch();
-    console.log("🚀 ~ file: FormThree.jsx ~ line 12 ~ FormThree ~ currentValues", currentValues)
+    const { agreement } = watch();
 
     const prefixSelector = (
         <Controller
@@ -70,99 +74,121 @@ const FormThree = () => {
             <Form className='form' onSubmitCapture={handleSubmit(submit)}>
                 <div className='input-cell' >
                     <Text className='label'>Email :</Text>
-                    <Controller
-                        name="email"
-                        control={control}
-                        render={({ field }) => (
-                            <Input
-                                placeholder='eg: example@gmail.com'
-                                type="email"
-                                {...field}
-                            />
-                        )}
-                    />
+                    <div className='input-content'>
+
+                        <Controller
+                            name="email"
+                            control={control}
+                            render={({ field }) => (
+                                <Input
+                                    placeholder='eg: example@gmail.com'
+                                    type="email"
+                                    {...field}
+                                />
+                            )}
+                        />
+                        {errors.email && <Text className='error'>{errors.email.message}</Text>}
+                    </div>
                 </div>
                 <div className='input-cell' >
                     <Text className='label'>Password :</Text>
-                    <Controller
-                        name="password"
-                        control={control}
-                        render={({ field }) => (
-                            <Input.Password
-                                placeholder='password'
-                                type={"password"}
-                                {...field}
-                            />
-                        )}
-                    />
+                    <div className='input-content'>
+                        <Controller
+                            name="password"
+                            control={control}
+                            render={({ field }) => (
+                                <Input.Password
+                                    placeholder='password'
+                                    type={"password"}
+                                    {...field}
+                                />
+                            )}
+                        />
+                        {errors.password && <Text className='error'>{errors.password.message}</Text>}
+                    </div>
                 </div>
                 <div className='input-cell' >
                     <Text className='label'>Confirm Password :</Text>
-                    <Controller
-                        name="confirmPassword"
-                        control={control}
-                        render={({ field }) => (
-                            <Input.Password
-                                placeholder='confirm password'
-                                type={"password"}
-                                {...field}
-                            />
-                        )}
-                    />
+                    <div className='input-content'>
+                        <Controller
+                            name="confirmPassword"
+                            control={control}
+                            render={({ field }) => (
+                                <Input.Password
+                                    placeholder='confirm password'
+                                    type={"password"}
+                                    {...field}
+                                />
+                            )}
+                        />
+                        {errors.confirmPassword && <Text className='error'>{errors.confirmPassword.message}</Text>}
+                    </div>
                 </div>
                 <div className='input-cell' >
                     <Text className='label'>Nick name :</Text>
-                    <Controller
-                        name="nickName"
-                        control={control}
-                        render={({ field }) => (
-                            <Input
-                                placeholder='eg: linda'
-                                {...field}
-                            />
-                        )}
-                    />
+                    <div className='input-content'>
+                        <Controller
+                            name="nickName"
+                            control={control}
+                            render={({ field }) => (
+                                <Input
+                                    placeholder='eg: linda'
+                                    {...field}
+                                />
+                            )}
+                        />
+                        {errors.nickName && <Text className='error'>{errors.nickName.message}</Text>}
+                    </div>
                 </div>
                 <div className='input-cell' >
                     <Text className='label'>Habitual Residence" :</Text>
-                    <Controller
-                        name="habitualResidence"
-                        control={control}
-                        render={({ field }) => (
-                            <Cascader
-                                options={residences}
-                                {...field}
-                            />
-                        )}
-                    />
+                    <div className='input-content-r'>
+                        <Controller
+                            name="habitualResidence"
+                            control={control}
+                            render={({ field }) => (
+                                <Cascader
+                                    options={residences}
+                                    {...field}
+                                />
+                            )}
+                        />
+                        {errors.habitualResidence && <Text className='error'>{errors.habitualResidence.message}</Text>}
+                    </div>
                 </div>
                 <div className='input-cell' >
                     <Text className='label'>Phone Number :</Text>
-                    <Controller
-                        name="phoneNumber"
-                        control={control}
-                        render={({ field }) => (
-                            <Input
-                                placeholder='50888888'
-                                addonBefore={prefixSelector}
-                                {...field}
-                            />
-                        )}
-                    />
-                </div>
-                <div className='input-cell' >
-                    <Controller
-                        name="agreement"
-                        control={control}
-                        render={({ field }) => (
-                            <Checkbox {...field}>
-                                I have read the <a href="">agreement</a>
-                            </Checkbox>
-                        )}
-                    />
+                    <div className='input-content'>
+                        <Controller
+                            name="phoneNumber"
+                            control={control}
+                            render={({ field }) => (
+                                <Input
+                                    placeholder='50888888'
+                                    addonBefore={prefixSelector}
+                                    {...field}
+                                />
+                            )}
+                        />
+                        {errors.phoneNumber && <Text className='error'>{errors.phoneNumber.message}</Text>}
+                    </div>
 
                 </div>
-                <Button className='submit' type="primary" htmlType='submit'>
+                <div className='input-cell' >
+                    <div className='input-content'>
+                        <Controller
+                            name="agreement"
+                            control={control}
+                            render={({ field }) => (
+                                <Checkbox {...field}>
+                                    I have read the <a href="">agreement</a>
+                                </Checkbox>
+                            )}
+                        />
+                        {errors.agreement && <Text className='error'>{errors.agreement.message}</Text>}
+                    </div>
+                </div>
+                <Button disabled={!agreement || Object.keys(errors).length > 0} className='submit' type="primary" htmlType='submit'>
                     Submit
                 </Button>
             </Form>
