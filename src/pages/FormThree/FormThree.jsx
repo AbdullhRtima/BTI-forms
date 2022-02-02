@@ -83,6 +83,7 @@ const FormThree = () => {
                                 <Input
                                     placeholder='eg: example@gmail.com'
                                     type="email"
+                                    data-testid="email"
                                     {...field}
                                 />
                             )}
